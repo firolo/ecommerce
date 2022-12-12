@@ -19,7 +19,6 @@ public class Ticket {
     private double monto;
     private double subtotal;
 
-
     public Ticket() { }
 
     public Ticket(List <Producto> productos, double monto, double subtotal) {

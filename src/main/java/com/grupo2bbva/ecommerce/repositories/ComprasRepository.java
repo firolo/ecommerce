@@ -1,12 +1,9 @@
 package com.grupo2bbva.ecommerce.repositories;
 
-import com.grupo2bbva.ecommerce.models.Cliente;
+import com.grupo2bbva.ecommerce.models.Compras;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource
-public interface ClienteRepository extends JpaRepository<Cliente, Long> {
-
-    Cliente findByEmail(String email);
+public interface ComprasRepository extends JpaRepository<Compras, Long> {
 }
-

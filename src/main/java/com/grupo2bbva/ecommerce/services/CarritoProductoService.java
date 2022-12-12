@@ -1,4 +1,4 @@
 package com.grupo2bbva.ecommerce.services;
 
-public class CarritoProductoService {
+public interface CarritoProductoService {
 }

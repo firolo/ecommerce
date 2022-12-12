@@ -3,6 +3,8 @@ package com.grupo2bbva.ecommerce.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Cliente {
@@ -28,6 +30,21 @@ public class Cliente {
     public static void save(Cliente cliente) {
     }
 
+    @OneToOne(mappedBy="cliente", fetch=FetchType.EAGER)
+    Carrito carrito;
+
+
+    @OneToMany(mappedBy="cliente", fetch=FetchType.EAGER)
+    Set<Compras> compras = new HashSet<>();
+
+    public Set<Compras> getCompras() {
+        return compras;
+    }
+
+    public void addCompras(Compras compra) {
+        compra.setCliente(this);
+        compras.add(compra);
+    }
     public long getId() {
         return id;
     }
