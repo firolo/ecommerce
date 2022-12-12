@@ -1,4 +1,10 @@
 package com.grupo2bbva.ecommerce.services;
 
-public class ClienteService {
+import com.grupo2bbva.ecommerce.models.Cliente;
+
+public interface ClienteService {
+
+    Cliente findByEmail(String email);
+    Cliente generateCliente(String nombre, String apellido, String email, String password);
+
 }
