@@ -1,5 +1,6 @@
 package com.grupo2bbva.ecommerce.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -25,6 +26,7 @@ public class CategoriaProducto {
         this.id = id;
     }
 
+    @JsonIgnore
     public Categoria getCategoria() {
         return categoria;
     }
@@ -33,6 +35,7 @@ public class CategoriaProducto {
         this.categoria = categoria;
     }
 
+    @JsonIgnore
     public Producto getProducto() {
         return producto;
     }
