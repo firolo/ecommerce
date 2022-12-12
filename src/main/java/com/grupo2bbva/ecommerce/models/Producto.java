@@ -14,6 +14,7 @@ public class Producto {
     private Long id;
     private String nombre;
     private Long stock;
+    private Double precio;
 
     @OneToMany(mappedBy="producto", fetch= FetchType.EAGER)
     Set<CategoriaProducto> productoCategorias = new HashSet<>();
@@ -51,11 +52,20 @@ public class Producto {
         this.productoCategorias = productoCategorias;
     }
 
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
+    }
+
     public Producto() {
     }
 
-    public Producto(String nombre, Long stock) {
+    public Producto(String nombre, Long stock, Double precio) {
         this.nombre = nombre;
         this.stock = stock;
+        this.precio = precio;
     }
 }
