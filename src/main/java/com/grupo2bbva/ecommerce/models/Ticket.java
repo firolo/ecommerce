@@ -14,6 +14,7 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
+    @ElementCollection
     private List <Producto> productos;
     private double monto;
     private double subtotal;
