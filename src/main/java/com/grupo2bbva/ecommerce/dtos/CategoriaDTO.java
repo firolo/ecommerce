@@ -1,5 +1,7 @@
 package com.grupo2bbva.ecommerce.dtos;
 
+import com.grupo2bbva.ecommerce.models.Categoria;
+
 public class CategoriaDTO {
     private Long id;
     private String nombre;
@@ -20,6 +22,11 @@ public class CategoriaDTO {
         this.nombre = nombre;
     }
 
+    public CategoriaDTO() {
+    }
 
-
+    public CategoriaDTO(Categoria categoria) {
+        this.id = categoria.getId();
+        this.nombre = categoria.getNombre();
+    }
 }
