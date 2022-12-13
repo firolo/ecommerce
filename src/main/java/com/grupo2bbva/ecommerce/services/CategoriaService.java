@@ -8,4 +8,6 @@ import java.util.Set;
 public interface CategoriaService {
     Set<CategoriaDTO> getAll();
     Categoria create(String nombre);
+
+    boolean delete(String nombre);
 }

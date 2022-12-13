@@ -30,4 +30,12 @@ public class CategoriaController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
+    @DeleteMapping("/categories")
+    ResponseEntity<Object> deleteCategoria(@RequestBody CategoriaDTOApplication categoriaDTOApplication) {
+        if(categoriaService.delete(categoriaDTOApplication.getNombre()))
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        else
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
 }

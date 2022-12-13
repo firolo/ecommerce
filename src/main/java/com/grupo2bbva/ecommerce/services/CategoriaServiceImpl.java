@@ -22,7 +22,20 @@ public class CategoriaServiceImpl implements CategoriaService {
     @Override
     public Categoria create(String nombre) {
         Categoria categoria = new Categoria(nombre);
+        categoria.setActive(false);
         categoriaRepository.save(categoria);
         return categoria;
+    }
+
+    @Override
+    public boolean delete(String nombre) {
+        Set<Categoria> categorias = categoriaRepository.findAll().stream().filter(categoria1 -> {return (categoria1.getNombre().equals(nombre));}).collect(Collectors.toSet());
+        if(categorias.iterator().hasNext()) {
+            Categoria categoria = categorias.iterator().next();
+            categoriaRepository.save(categoria);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
