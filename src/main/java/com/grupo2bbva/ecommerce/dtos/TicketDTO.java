@@ -1,9 +1,6 @@
 package com.grupo2bbva.ecommerce.dtos;
 
-import com.grupo2bbva.ecommerce.models.Producto;
 import com.grupo2bbva.ecommerce.models.Ticket;
-
-import java.util.List;
 
 public class TicketDTO {
 
