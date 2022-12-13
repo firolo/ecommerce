@@ -16,6 +16,8 @@ public class Categoria {
     @OneToMany(mappedBy="categoria", fetch= FetchType.EAGER)
     Set<CategoriaProducto> categoriaProductos = new HashSet<>();
 
+    private boolean active;
+
     public Long getId() {
         return id;
     }
@@ -32,10 +34,19 @@ public class Categoria {
         this.nombre = nombre;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public Categoria() {
     }
 
     public Categoria(String nombre) {
         this.nombre = nombre;
+        this.active = true;
     }
 }
