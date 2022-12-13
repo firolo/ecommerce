@@ -19,6 +19,9 @@ public class Producto {
     @OneToMany(mappedBy="producto", fetch= FetchType.EAGER)
     Set<CategoriaProducto> productoCategorias = new HashSet<>();
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="owner_id")
+    private TicketProducto ticketProducto;
 
     public Long getId() {
         return id;
@@ -67,5 +70,13 @@ public class Producto {
         this.nombre = nombre;
         this.stock = stock;
         this.precio = precio;
+    }
+
+    public TicketProducto getTicketProducto() {
+        return ticketProducto;
+    }
+
+    public void setTicketProducto(TicketProducto ticketProducto) {
+        this.ticketProducto = ticketProducto;
     }
 }

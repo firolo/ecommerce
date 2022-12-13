@@ -1,6 +1,10 @@
 package com.grupo2bbva.ecommerce.dtos;
 
+import com.grupo2bbva.ecommerce.models.Producto;
+
 import java.util.Set;
+
+import static java.util.stream.Collectors.toSet;
 
 public class ProductoDTO {
     private Long id;
@@ -9,43 +13,33 @@ public class ProductoDTO {
     private Double precio;
     private Set<CategoriaDTO> categorias;
 
-    public Long getId() {
-        return id;
+    public ProductoDTO(Producto producto) {
+        this.id = producto.getId();
+        this.nombre = producto.getNombre();
+        this.stock = producto.getStock();
+        this.precio = producto.getPrecio();
+        this.categorias = producto.getProductoCategorias().stream().map(categoriaProducto ->
+                          new CategoriaDTO(categoriaProducto.getCategoria())).collect(toSet());
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getId() {
+        return id;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public Long getStock() {
         return stock;
-    }
-
-    public void setStock(Long stock) {
-        this.stock = stock;
     }
 
     public Double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Double precio) {
-        this.precio = precio;
-    }
-
     public Set<CategoriaDTO> getCategorias() {
         return categorias;
     }
 
-    public void setCategorias(Set<CategoriaDTO> categorias) {
-        this.categorias = categorias;
-    }
 }
