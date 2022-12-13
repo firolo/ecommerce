@@ -4,6 +4,7 @@ package com.grupo2bbva.ecommerce.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -14,17 +15,17 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
-    @ElementCollection
-    private List <Producto> productos;
+
     private double monto;
     private double subtotal;
 
+    private LocalDateTime fechaCompra;
     public Ticket() { }
 
-    public Ticket(List <Producto> productos, double monto, double subtotal) {
-        this.productos = productos;
+    public Ticket(double monto, double subtotal, LocalDateTime fechaCompra) {
         this.monto = monto;
         this.subtotal = subtotal;
+        this.fechaCompra = fechaCompra;
     }
 
     public static void save(Ticket ticket) {
@@ -36,14 +37,6 @@ public class Ticket {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public List<Producto> getProductos() {
-        return productos;
-    }
-
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos;
     }
 
     public double getMonto() {

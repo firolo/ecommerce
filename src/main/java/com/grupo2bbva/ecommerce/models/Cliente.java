@@ -18,6 +18,12 @@ public class Cliente {
 
     private String password;
 
+    @OneToOne(mappedBy="cliente", fetch=FetchType.EAGER)
+    Carrito carrito;
+
+    @OneToMany(mappedBy="cliente", fetch=FetchType.EAGER)
+    Set<Compras> compras = new HashSet<>();
+
     public Cliente() { }
 
     public Cliente(String nombre, String apellido, String email, String password) {
@@ -29,13 +35,6 @@ public class Cliente {
 
     public static void save(Cliente cliente) {
     }
-
-    @OneToOne(mappedBy="cliente", fetch=FetchType.EAGER)
-    Carrito carrito;
-
-
-    @OneToMany(mappedBy="cliente", fetch=FetchType.EAGER)
-    Set<Compras> compras = new HashSet<>();
 
     public Set<Compras> getCompras() {
         return compras;
