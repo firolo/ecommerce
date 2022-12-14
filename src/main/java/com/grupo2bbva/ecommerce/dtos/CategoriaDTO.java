@@ -2,10 +2,15 @@ package com.grupo2bbva.ecommerce.dtos;
 
 import com.grupo2bbva.ecommerce.models.Categoria;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public class CategoriaDTO {
     private Long id;
     private String nombre;
     private boolean active;
+
+    private Set<ProductoDTO> productos;
 
     public Long getId() {
         return id;
@@ -23,6 +28,9 @@ public class CategoriaDTO {
         this.active = active;
     }
 
+    public Set<ProductoDTO> getProductos() {
+        return productos;
+    }
 
     public CategoriaDTO() {
     }
@@ -31,5 +39,6 @@ public class CategoriaDTO {
         this.id = categoria.getId();
         this.nombre = categoria.getNombre();
         this.active = categoria.isActive();
+        //this.productos = categoria.getCategoriaProductos().stream().map(categoriaProducto -> new ProductoDTO(categoriaProducto.getProducto())).collect(Collectors.toSet());
     }
 }

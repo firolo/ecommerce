@@ -42,6 +42,14 @@ public class Categoria {
         this.active = active;
     }
 
+    public Set<CategoriaProducto> getCategoriaProductos() {
+        return categoriaProductos;
+    }
+
+    public void setCategoriaProductos(Set<CategoriaProducto> categoriaProductos) {
+        this.categoriaProductos = categoriaProductos;
+    }
+
     public Categoria() {
     }
 

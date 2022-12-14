@@ -46,8 +46,8 @@ public class ProductoDTO {
         this.nombre = producto.getNombre();
         this.stock = producto.getStock();
         this.precio = producto.getPrecio();
-        this.categorias = producto.getProductoCategorias().stream().map(categoriaProducto ->
-                new CategoriaDTO(categoriaProducto.getCategoria())).collect(toSet());
+        /*this.categorias = producto.getProductoCategorias().stream().map(categoriaProducto ->
+                new CategoriaDTO(categoriaProducto.getCategoria())).collect(toSet());*/
         this.active = producto.isActive();
     }
 
