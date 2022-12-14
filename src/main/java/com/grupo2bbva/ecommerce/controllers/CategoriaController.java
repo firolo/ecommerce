@@ -32,7 +32,15 @@ public class CategoriaController {
 
     @DeleteMapping("/categories")
     ResponseEntity<Object> deleteCategoria(@RequestBody CategoriaDTOApplication categoriaDTOApplication) {
-        if(categoriaService.delete(categoriaDTOApplication.getNombre()))
+        if(categoriaService.delete(categoriaDTOApplication.getId()))
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        else
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
+    @PutMapping("/categories")
+    ResponseEntity<Object> updateCategoria(@RequestBody CategoriaDTOApplication categoriaDTOApplication) {
+        if(categoriaService.update(categoriaDTOApplication))
             return new ResponseEntity<>(HttpStatus.CREATED);
         else
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);

@@ -4,11 +4,13 @@ import com.grupo2bbva.ecommerce.dtos.CarritoProductoDTO;
 import com.grupo2bbva.ecommerce.models.CarritoProducto;
 import com.grupo2bbva.ecommerce.repositories.CarritoProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class CarritoProductoServiceImpl implements CarritoProductoService{
     @Autowired
     private CarritoProductoRepository carritoProductoRepository;

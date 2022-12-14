@@ -12,15 +12,7 @@ public class ProductoDTO {
     private Long stock;
     private Double precio;
     private Set<CategoriaDTO> categorias;
-
-    public ProductoDTO(Producto producto) {
-        this.id = producto.getId();
-        this.nombre = producto.getNombre();
-        this.stock = producto.getStock();
-        this.precio = producto.getPrecio();
-        this.categorias = producto.getProductoCategorias().stream().map(categoriaProducto ->
-                          new CategoriaDTO(categoriaProducto.getCategoria())).collect(toSet());
-    }
+    private boolean active;
 
     public Long getId() {
         return id;
@@ -40,6 +32,23 @@ public class ProductoDTO {
 
     public Set<CategoriaDTO> getCategorias() {
         return categorias;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public ProductoDTO() {
+    }
+
+    public ProductoDTO(Producto producto) {
+        this.id = producto.getId();
+        this.nombre = producto.getNombre();
+        this.stock = producto.getStock();
+        this.precio = producto.getPrecio();
+        /*this.categorias = producto.getProductoCategorias().stream().map(categoriaProducto ->
+                new CategoriaDTO(categoriaProducto.getCategoria())).collect(toSet());*/
+        this.active = producto.isActive();
     }
 
 }
