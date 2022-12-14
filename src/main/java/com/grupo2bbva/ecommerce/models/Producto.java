@@ -15,6 +15,7 @@ public class Producto {
     private String nombre;
     private Long stock;
     private Double precio;
+    private boolean active;
 
     @OneToMany(mappedBy="producto", fetch= FetchType.EAGER)
     Set<CategoriaProducto> productoCategorias = new HashSet<>();
@@ -63,6 +64,14 @@ public class Producto {
         this.precio = precio;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public Producto() {
     }
 
@@ -70,6 +79,7 @@ public class Producto {
         this.nombre = nombre;
         this.stock = stock;
         this.precio = precio;
+        this.active = true;
     }
 
     public TicketProducto getTicketProducto() {

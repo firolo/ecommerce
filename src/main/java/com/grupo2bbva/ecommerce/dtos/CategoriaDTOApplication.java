@@ -1,20 +1,22 @@
 package com.grupo2bbva.ecommerce.dtos;
 
 public class CategoriaDTOApplication {
+    private Long id;
     private String nombre;
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public Long getId() {
+        return id;
     }
 
     public CategoriaDTOApplication() {
     }
 
-    public CategoriaDTOApplication(String nombre) {
+    public CategoriaDTOApplication(Long id, String nombre) {
+        this.id = id;
         this.nombre = nombre;
     }
 }

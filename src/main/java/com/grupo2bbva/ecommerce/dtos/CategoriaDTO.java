@@ -5,22 +5,24 @@ import com.grupo2bbva.ecommerce.models.Categoria;
 public class CategoriaDTO {
     private Long id;
     private String nombre;
+    private boolean active;
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public boolean isActive() {
+        return active;
     }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
 
     public CategoriaDTO() {
     }
@@ -28,5 +30,6 @@ public class CategoriaDTO {
     public CategoriaDTO(Categoria categoria) {
         this.id = categoria.getId();
         this.nombre = categoria.getNombre();
+        this.active = categoria.isActive();
     }
 }
