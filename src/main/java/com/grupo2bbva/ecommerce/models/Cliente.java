@@ -21,8 +21,8 @@ public class Cliente {
     @OneToOne(mappedBy="cliente", fetch=FetchType.EAGER)
     Carrito carrito;
 
-    @OneToMany(mappedBy="cliente", fetch=FetchType.EAGER)
-    Set<Compras> compras = new HashSet<>();
+    @OneToMany(mappedBy="cliente", fetch= FetchType.EAGER)
+    Set<Ticket> tickets;
 
     public Cliente() { }
 
@@ -81,16 +81,4 @@ public class Cliente {
         this.carrito = carrito;
     }
 
-    public Set<Compras> getCompras() {
-        return compras;
-    }
-
-    public void setCompras(Set<Compras> compras) {
-        this.compras = compras;
-    }
-
-    public void addCompras(Compras compra) {
-        compra.setCliente(this);
-        compras.add(compra);
-    }
 }

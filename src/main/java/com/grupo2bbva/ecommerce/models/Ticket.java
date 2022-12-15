@@ -18,18 +18,10 @@ public class Ticket {
 
     private double monto;
     private double subtotal;
-
     private LocalDateTime fechaCompra;
-    public Ticket() { }
-
-    public Ticket(double monto, double subtotal, LocalDateTime fechaCompra) {
-        this.monto = monto;
-        this.subtotal = subtotal;
-        this.fechaCompra = fechaCompra;
-    }
-
-    public static void save(Ticket ticket) {
-    }
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="cliente_id")
+    private Cliente cliente;
 
     public long getId() {
         return id;
@@ -54,4 +46,29 @@ public class Ticket {
     public void setSubtotal(double subtotal) {
         this.subtotal = subtotal;
     }
+
+    public LocalDateTime getFechaCompra() {
+        return fechaCompra;
+    }
+
+    public void setFechaCompra(LocalDateTime fechaCompra) {
+        this.fechaCompra = fechaCompra;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Ticket() { }
+
+    public Ticket(double monto, double subtotal, LocalDateTime fechaCompra) {
+        this.monto = monto;
+        this.subtotal = subtotal;
+        this.fechaCompra = fechaCompra;
+    }
+
 }
