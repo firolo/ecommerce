@@ -69,6 +69,8 @@ public class CarritoServiceImpl implements CarritoService{
 
     @Override
     public String agregarProductoACarrito(Carrito carrito, Producto producto, int cantidadProductos) {
+        boolean productoExisteEnCarrito = false;
+
         if (cantidadProductos < 1 || cantidadProductos > producto.getStock()) {
             return "Cant. productos invalida";
         }
@@ -85,13 +87,70 @@ public class CarritoServiceImpl implements CarritoService{
             return "El carrito no existe";
         }
 
-        CarritoProducto carritoProducto = new CarritoProducto(carrito, producto, cantidadProductos);
+        List<CarritoProducto> productosExistentes = carrito.getCarritoProductos().stream().collect(Collectors.toList());
 
-        if (carritoProducto != null) {
-            carritoProductoRepository.save(carritoProducto);
-            return "Agregado OK";
+        for (CarritoProducto productoExistente : productosExistentes) {
+            if (productoExistente.getProducto().getId() == producto.getId()) {
+                //Si el producto existe, le agrego la cantidad que ya tiene a la cantidad nueva que me envían
+                int cantidadNuevaProductos = productoExistente.getCantidadProductos() + cantidadProductos;
+                if (cantidadNuevaProductos <= producto.getStock()) {
+                    productoExistente.setCantidadProductos(cantidadNuevaProductos);
+                    productoExisteEnCarrito = true;
+                    break;
+                }
+                return "Cant. productos invalida";
+            }
+        }
+
+        if (!productoExisteEnCarrito) {
+            CarritoProducto carritoProducto = new CarritoProducto(carrito, producto, cantidadProductos);
+
+            if (carritoProducto != null) {
+                carritoProductoRepository.save(carritoProducto);
+                return "Agregado OK";
+            }
         }
 
         return "No se creo CarritoProducto";
+    }
+
+    @Override
+    public String quitarProductoDeCarrito(Carrito carrito, Producto producto, int cantidadProductos) {
+        if (cantidadProductos < 1 || cantidadProductos > producto.getStock()) {
+            return "Cant. productos invalida";
+        }
+
+        if (!producto.isActive()) {
+            return "El producto no esta activo";
+        }
+
+        if (producto == null) {
+            return "El producto no existe";
+        }
+
+        if (carrito == null) {
+            return "El carrito no existe";
+        }
+
+        List<CarritoProducto> productosExistentes = carrito.getCarritoProductos().stream().collect(Collectors.toList());
+
+        for(CarritoProducto productoExistente : productosExistentes) {
+            if (productoExistente.getProducto().getId() == producto.getId()) {
+                int cantidadNuevaProductos = productoExistente.getCantidadProductos() - cantidadProductos;
+
+                if (cantidadNuevaProductos < 1) {
+                    carritoProductoRepository.delete(productoExistente);
+
+                    return "Se eliminó el producto del carrito";
+                }
+
+                productoExistente.setCantidadProductos(cantidadNuevaProductos);
+
+                return "Se restó la cantidad del producto en el carrito";
+            }
+        }
+
+
+        return "El carrito no contenía el producto";
     }
 }
