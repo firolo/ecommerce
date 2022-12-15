@@ -41,6 +41,8 @@ public class CarritoProductoController {
 
                     if (respuesta.equals("Agregado OK")) {
                         return new ResponseEntity<>(respuesta, HttpStatus.OK);
+                    } else {
+                        return new ResponseEntity<>(respuesta, HttpStatus.FORBIDDEN);
                     }
                 }
 
@@ -50,6 +52,32 @@ public class CarritoProductoController {
         }
 
         // no encontré cliente porque no estoy logueado, por ende no tengo autorización
+        return new ResponseEntity<>("No estás autenticado", HttpStatus.UNAUTHORIZED);
+    }
+
+    @PostMapping("/cliente/carrito/quitar")
+    public ResponseEntity<Object> quitarProductoDeCarrito(Authentication authentication, @RequestParam Long idProducto, @RequestParam int cantidadProductos) {
+        if (authentication != null) {
+            Cliente cliente = clienteService.findByEmail(authentication.getName());
+
+            if (cliente != null) {
+                Producto producto = productoService.findById(idProducto);
+
+                if (producto != null) {
+                    String respuesta = carritoService.quitarProductoDeCarrito(cliente.getCarrito(), producto, cantidadProductos);
+
+                    if (respuesta.equals("Se eliminó el producto del carrito") ||
+                            respuesta.equals("Se restó la cantidad del producto en el carrito")) {
+                        return new ResponseEntity<>(respuesta, HttpStatus.OK);
+                    } else {
+                        return new ResponseEntity<>(respuesta, HttpStatus.FORBIDDEN);
+                    }
+                }
+                return new ResponseEntity<>("Producto no encontrado", HttpStatus.FORBIDDEN);
+            }
+        }
+
+
         return new ResponseEntity<>("No estás autenticado", HttpStatus.UNAUTHORIZED);
     }
 }

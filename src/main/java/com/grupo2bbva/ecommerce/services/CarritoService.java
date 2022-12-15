@@ -23,4 +23,6 @@ public interface CarritoService {
     List<CarritoProductoDTO> findProductosByClienteDTO(Cliente cliente);
 
     String agregarProductoACarrito(Carrito carrito, Producto producto, int cantidadProductos);
+
+    String quitarProductoDeCarrito(Carrito carrito, Producto producto, int cantidadProductos);
 }
