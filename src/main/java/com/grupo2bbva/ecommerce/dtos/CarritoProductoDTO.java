@@ -17,7 +17,8 @@ public class CarritoProductoDTO {
     }
 
     public CarritoProductoDTO(CarritoProducto carritoProducto) {
-        this.carritoId = carritoProducto.getId();
+        this.id = carritoProducto.getId();
+        this.carritoId = carritoProducto.getCarrito().getId();
         this.nombreProducto = carritoProducto.getProducto().getNombre();
         this.monto = carritoProducto.getMonto();
         this.cantidadProductos = carritoProducto.getCantidadProductos();
