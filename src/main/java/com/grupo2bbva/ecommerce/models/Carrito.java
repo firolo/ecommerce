@@ -20,7 +20,7 @@ public class Carrito {
     @OneToMany(mappedBy = "carrito", fetch = FetchType.EAGER)
     private Set<CarritoProducto> carritoProductos;
 
-    @OneToOne (cascade = CascadeType.ALL)
+    @OneToOne// (cascade = CascadeType.ALL)
     @JoinColumn (name = "client_id")
     private Cliente cliente;
 

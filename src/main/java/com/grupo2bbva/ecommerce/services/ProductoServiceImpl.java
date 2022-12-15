@@ -20,6 +20,16 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
+    public Producto findById(Long id) {
+        return productoRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public ProductoDTO findByIdDTO(Long id) {
+        return productoRepository.findById(id).map(producto -> new ProductoDTO(producto)).orElse(null);
+    }
+
+    @Override
     public boolean create(ProductoDTOApplication productoDTOApplication) {
         Producto producto = new Producto(productoDTOApplication.getNombre(), productoDTOApplication.getStock(), productoDTOApplication.getPrecio());
         productoRepository.save(producto);

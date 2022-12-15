@@ -33,17 +33,6 @@ public class Cliente {
         this.password = password;
     }
 
-    public static void save(Cliente cliente) {
-    }
-
-    public Set<Compras> getCompras() {
-        return compras;
-    }
-
-    public void addCompras(Compras compra) {
-        compra.setCliente(this);
-        compras.add(compra);
-    }
     public long getId() {
         return id;
     }
@@ -82,5 +71,26 @@ public class Cliente {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Carrito getCarrito() {
+        return carrito;
+    }
+
+    public void setCarrito(Carrito carrito) {
+        this.carrito = carrito;
+    }
+
+    public Set<Compras> getCompras() {
+        return compras;
+    }
+
+    public void setCompras(Set<Compras> compras) {
+        this.compras = compras;
+    }
+
+    public void addCompras(Compras compra) {
+        compra.setCliente(this);
+        compras.add(compra);
     }
 }
