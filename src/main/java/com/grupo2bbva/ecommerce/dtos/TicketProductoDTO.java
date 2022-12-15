@@ -15,7 +15,6 @@ public class TicketProductoDTO {
     public TicketProductoDTO(TicketProducto ticketProducto) {
         this.id = ticketProducto.getId();
         this.cantidad = ticketProducto.getCantidad();
-        this.productos = ticketProducto.getProductos().stream().map(ProductoDTO::new).collect(toSet());
     }
 
     public long getId() {

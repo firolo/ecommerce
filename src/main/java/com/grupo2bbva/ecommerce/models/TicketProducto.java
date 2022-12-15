@@ -12,27 +12,26 @@ public class TicketProducto {
     @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Long Id;
-
     private double cantidad;
-    @OneToMany(mappedBy="ticketProducto", fetch= FetchType.EAGER)
-    Set<Producto> productos = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="ticket_id")
+    private Ticket ticket;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="producto_id")
+    private Producto producto;
+
 
     public TicketProducto() { }
 
-    public TicketProducto(double cantidad) {
-        this.cantidad = cantidad;
+    public TicketProducto(CarritoProducto carritoProducto, Ticket ticket) {
+        this.cantidad = carritoProducto.getCantidadProductos();
+        this.ticket = ticket;
+        this.producto = carritoProducto.getProducto();
     }
 
     public static void save(TicketProducto ticketProducto) {
-    }
-
-    public Set<Producto> getProductos() {
-        return productos;
-    }
-
-    public void addProductos(Producto producto) {
-        producto.setTicketProducto(this);
-        productos.add(producto);
     }
 
     public Long getId() {
