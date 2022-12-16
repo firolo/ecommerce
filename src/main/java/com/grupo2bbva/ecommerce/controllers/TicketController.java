@@ -29,6 +29,9 @@ public class TicketController {
             Cliente cliente = clienteService.findByEmail(authentication.getName());
 
             if (cliente != null) {
+                if(cliente.getCarrito().getCarritoProductos().isEmpty()) {
+                    return new ResponseEntity<>("El carrito está vacio", HttpStatus.FORBIDDEN);
+                }
                 String resultado = ticketService.comprar(cliente);
                 if(resultado.equals("Compra OK")) {
                     return new ResponseEntity<>(resultado, HttpStatus.OK);

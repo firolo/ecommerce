@@ -37,8 +37,8 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
         }); //fin userDetailsService
     }
 
-    @Bean
+    /*@Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
+    }*/
 }
