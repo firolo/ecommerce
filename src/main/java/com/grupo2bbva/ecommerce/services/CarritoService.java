@@ -25,4 +25,6 @@ public interface CarritoService {
     String agregarProductoACarrito(Carrito carrito, Producto producto, int cantidadProductos);
 
     String quitarProductoDeCarrito(Carrito carrito, Producto producto, int cantidadProductos);
+
+    void vaciarCarrito(Cliente cliente);
 }
