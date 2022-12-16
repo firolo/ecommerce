@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -95,20 +96,20 @@ public class CarritoServiceImpl implements CarritoService{
                 int cantidadNuevaProductos = productoExistente.getCantidadProductos() + cantidadProductos;
                 if (cantidadNuevaProductos <= producto.getStock()) {
                     productoExistente.setCantidadProductos(cantidadNuevaProductos);
-                    productoExisteEnCarrito = true;
-                    break;
+
+                    carritoProductoRepository.save(productoExistente);
+
+                    return "Cant. productos modificada";
                 }
                 return "Cant. productos invalida";
             }
         }
 
-        if (!productoExisteEnCarrito) {
-            CarritoProducto carritoProducto = new CarritoProducto(carrito, producto, cantidadProductos);
+        CarritoProducto carritoProducto = new CarritoProducto(carrito, producto, cantidadProductos);
 
-            if (carritoProducto != null) {
-                carritoProductoRepository.save(carritoProducto);
-                return "Agregado OK";
-            }
+        if (carritoProducto != null) {
+            carritoProductoRepository.save(carritoProducto);
+            return "Agregado OK";
         }
 
         return "No se creo CarritoProducto";
@@ -141,16 +142,27 @@ public class CarritoServiceImpl implements CarritoService{
                 if (cantidadNuevaProductos < 1) {
                     carritoProductoRepository.delete(productoExistente);
 
-                    return "Se eliminó el producto del carrito";
+                    return "Producto eliminado";
                 }
 
                 productoExistente.setCantidadProductos(cantidadNuevaProductos);
 
-                return "Se restó la cantidad del producto en el carrito";
+                carritoProductoRepository.save(productoExistente);
+
+                return "Producto restado";
             }
         }
-
-
         return "El carrito no contenía el producto";
+    }
+
+    @Override
+    public void vaciarCarrito(Cliente cliente) {
+        Set<CarritoProducto> carritoProductos = cliente.getCarrito().getCarritoProductos();
+
+        for(CarritoProducto producto : carritoProductos) {
+            carritoProductoRepository.delete(producto);
+        }
+
+        carritoProductos.clear();
     }
 }

@@ -18,22 +18,18 @@ public class ClienteController {
     @Autowired
     private ClienteService clienteService;
 
-    @PostMapping(path = "/clients")
-    public ResponseEntity<Object> register(
 
-            @RequestParam String nombre, @RequestParam String apellido,
+
+    @PostMapping("/clients")
+    public ResponseEntity<Object> registrarCliente(@RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String email, @RequestParam String password) {
 
         if (nombre.isEmpty() || apellido.isEmpty() || email.isEmpty() || password.isEmpty()) {
-
             return new ResponseEntity<>("Faltan datos", HttpStatus.FORBIDDEN);
-
         }
 
-        if (clienteService.findByEmail(email) !=  null) {
-
+        if (clienteService.findByEmail(email) != null) {
             return new ResponseEntity<>("Usuario ya existente", HttpStatus.FORBIDDEN);
-
         }
 
         Cliente cliente = clienteService.generateCliente(nombre, apellido, email, password);

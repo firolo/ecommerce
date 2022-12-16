@@ -39,7 +39,7 @@ public class CarritoProductoController {
                 if (producto != null) {
                     String respuesta = carritoService.agregarProductoACarrito(cliente.getCarrito(), producto, cantidadProductos);
 
-                    if (respuesta.equals("Agregado OK")) {
+                    if (respuesta.equals("Agregado OK") || respuesta.equals("Cant. productos modificada")) {
                         return new ResponseEntity<>(respuesta, HttpStatus.OK);
                     } else {
                         return new ResponseEntity<>(respuesta, HttpStatus.FORBIDDEN);
@@ -66,8 +66,8 @@ public class CarritoProductoController {
                 if (producto != null) {
                     String respuesta = carritoService.quitarProductoDeCarrito(cliente.getCarrito(), producto, cantidadProductos);
 
-                    if (respuesta.equals("Se eliminó el producto del carrito") ||
-                            respuesta.equals("Se restó la cantidad del producto en el carrito")) {
+                    if (respuesta.equals("Producto eliminado") ||
+                            respuesta.equals("Producto restado")) {
                         return new ResponseEntity<>(respuesta, HttpStatus.OK);
                     } else {
                         return new ResponseEntity<>(respuesta, HttpStatus.FORBIDDEN);
@@ -76,7 +76,6 @@ public class CarritoProductoController {
                 return new ResponseEntity<>("Producto no encontrado", HttpStatus.FORBIDDEN);
             }
         }
-
 
         return new ResponseEntity<>("No estás autenticado", HttpStatus.UNAUTHORIZED);
     }
