@@ -41,7 +41,6 @@ public class EcommerceApplication {
 			CarritoProducto carritoProducto1 = new CarritoProducto(carrito1, producto1, 5);
 
 			clienteRepository.save(cliente1);
-
 			carritoRepository.save(carrito1);
 
 			categoriaRepository.save(categoria1);

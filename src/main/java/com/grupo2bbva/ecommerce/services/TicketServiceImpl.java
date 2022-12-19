@@ -1,5 +1,6 @@
 package com.grupo2bbva.ecommerce.services;
 
+import com.grupo2bbva.ecommerce.dtos.TicketDTO;
 import com.grupo2bbva.ecommerce.models.*;
 import com.grupo2bbva.ecommerce.repositories.CarritoProductoRepository;
 import com.grupo2bbva.ecommerce.repositories.ProductoRepository;
@@ -42,7 +43,7 @@ public class TicketServiceImpl implements TicketService {
             sumaProductos = sumaProductos + carritoProducto.getMonto();
         }
 
-        Ticket ticket = new Ticket(sumaProductos,sumaProductos, LocalDateTime.now());
+        Ticket ticket = new Ticket(sumaProductos,sumaProductos, LocalDateTime.now(), cliente);
         Set<TicketProducto> ticketProductos = carritoProductos.stream().
                 map(carritosProductos -> {return new TicketProducto(carritosProductos, ticket);}).collect(Collectors.toSet());
 
@@ -58,5 +59,10 @@ public class TicketServiceImpl implements TicketService {
 
         return "Compra OK";
 
+    }
+
+    @Override
+    public Set<TicketDTO> getCompras(Cliente cliente) {
+        return ticketRepository.findAll().stream().map(TicketDTO::new).collect(Collectors.toSet());
     }
 }
