@@ -94,8 +94,10 @@ public class CarritoServiceImpl implements CarritoService{
             if (productoExistente.getProducto().getId() == producto.getId()) {
                 //Si el producto existe, le agrego la cantidad que ya tiene a la cantidad nueva que me envían
                 int cantidadNuevaProductos = productoExistente.getCantidadProductos() + cantidadProductos;
+                double precioNuevoProductos = productoExistente.getProducto().getPrecio() * cantidadNuevaProductos;
                 if (cantidadNuevaProductos <= producto.getStock()) {
                     productoExistente.setCantidadProductos(cantidadNuevaProductos);
+                    productoExistente.setMonto(precioNuevoProductos);
 
                     carritoProductoRepository.save(productoExistente);
 
@@ -105,14 +107,14 @@ public class CarritoServiceImpl implements CarritoService{
             }
         }
 
-        CarritoProducto carritoProducto = new CarritoProducto(carrito, producto, cantidadProductos);
+        try {
+            CarritoProducto carritoProducto = new CarritoProducto(carrito, producto, cantidadProductos);
 
-        if (carritoProducto != null) {
             carritoProductoRepository.save(carritoProducto);
             return "Agregado OK";
+        } catch (Exception e) {
+            return "No se creo CarritoProducto";
         }
-
-        return "No se creo CarritoProducto";
     }
 
     @Override
@@ -144,7 +146,9 @@ public class CarritoServiceImpl implements CarritoService{
 
                     return "Producto eliminado";
                 }
+                double precioNuevoProductos = productoExistente.getProducto().getPrecio() * cantidadNuevaProductos;
 
+                productoExistente.setMonto(precioNuevoProductos);
                 productoExistente.setCantidadProductos(cantidadNuevaProductos);
 
                 carritoProductoRepository.save(productoExistente);
