@@ -2,11 +2,14 @@ package com.grupo2bbva.ecommerce;
 
 import com.grupo2bbva.ecommerce.models.*;
 import com.grupo2bbva.ecommerce.repositories.*;
+import com.grupo2bbva.ecommerce.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
@@ -17,6 +20,9 @@ public class EcommerceApplication {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private EmailService emailService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(EcommerceApplication.class, args);
@@ -52,4 +58,10 @@ public class EcommerceApplication {
 			carritoProductoRepository.save(carritoProducto1);
 		};
 	}
+	/*
+	@EventListener(ApplicationReadyEvent.class)
+	public void sendMail() {
+		emailService.sendEmail("raffi.kocak13@gmail.com", "PRUEBA SUBJECT", "CUERPO EMAIL");
+	}
+	*/
 }
