@@ -6,4 +6,5 @@ import com.grupo2bbva.ecommerce.models.Producto;
 
 public interface CategoriaProductoService {
     public boolean add(CategoriaProductoDTOApplication categoriaProductoDTOApplication);
+    boolean delete(CategoriaProductoDTOApplication categoriaProductoDTOApplication);
 }

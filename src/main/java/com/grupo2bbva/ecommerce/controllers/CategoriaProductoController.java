@@ -5,10 +5,8 @@ import com.grupo2bbva.ecommerce.services.CategoriaProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -17,11 +15,19 @@ public class CategoriaProductoController {
     CategoriaProductoService categoriaProductoService;
 
     @PostMapping("/categoryproduct")
-    ResponseEntity<Object> joinCategoryProduct(@RequestBody CategoriaProductoDTOApplication categoriaProductoDTOApplication) {
+    ResponseEntity<Object> joinCategoryProduct(Authentication authentication, @RequestBody CategoriaProductoDTOApplication categoriaProductoDTOApplication) {
         if(categoriaProductoService.add(categoriaProductoDTOApplication))
             return new ResponseEntity<>(HttpStatus.CREATED);
         else
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
+    @DeleteMapping("categoryproduct")
+    ResponseEntity<Object> deleteJoinCategoryProduct(Authentication authentication, @RequestBody CategoriaProductoDTOApplication categoriaProductoDTOApplication) {
+        if(categoriaProductoService.delete(categoriaProductoDTOApplication))
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        else
+            return new ResponseEntity<>("No se encontró la relación categoría producto",HttpStatus.FORBIDDEN);
     }
 
 }

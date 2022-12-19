@@ -10,6 +10,10 @@ import com.grupo2bbva.ecommerce.repositories.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Service
 public class CategoriaProductoServiceImpl implements CategoriaProductoService {
     @Autowired
@@ -28,6 +32,22 @@ public class CategoriaProductoServiceImpl implements CategoriaProductoService {
             return true;
         } else return false;
 
+    }
+
+    @Override
+    public boolean delete(CategoriaProductoDTOApplication categoriaProductoDTOApplication) {
+        List<CategoriaProducto> categoriaProductos = categoriaProductoRepository.findAll();
+        List<CategoriaProducto>  categoriaProductoFiltrado = categoriaProductos.stream().
+                filter(categoriaProducto1 ->
+                { if (categoriaProducto1.getProducto().getId() == categoriaProductoDTOApplication.getIdproduct() &&
+                categoriaProducto1.getCategoria().getId() == categoriaProductoDTOApplication.getIdcategory()) return true; return false;}).
+                collect(Collectors.toList());
+
+        if(categoriaProductoFiltrado.iterator().hasNext()) {
+            categoriaProductoRepository.delete(categoriaProductos.iterator().next());
+            return true;
+        }
+        return false;
     }
 
 }

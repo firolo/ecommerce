@@ -5,7 +5,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 
 @Entity
@@ -65,10 +64,11 @@ public class Ticket {
 
     public Ticket() { }
 
-    public Ticket(double monto, double subtotal, LocalDateTime fechaCompra) {
+    public Ticket(double monto, double subtotal, LocalDateTime fechaCompra, Cliente cliente) {
         this.monto = monto;
         this.subtotal = subtotal;
         this.fechaCompra = fechaCompra;
+        this.cliente = cliente;
     }
 
 }
