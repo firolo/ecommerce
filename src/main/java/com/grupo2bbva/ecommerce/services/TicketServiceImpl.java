@@ -7,10 +7,13 @@ import com.grupo2bbva.ecommerce.repositories.ProductoRepository;
 import com.grupo2bbva.ecommerce.repositories.TicketProductoRepository;
 import com.grupo2bbva.ecommerce.repositories.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -26,6 +29,9 @@ public class TicketServiceImpl implements TicketService {
     CarritoProductoRepository carritoProductoRepository;
     @Autowired
     ProductoRepository productoRepository;
+
+    @Autowired
+    EmailService emailService;
 
     @Override
     public String comprar(Cliente cliente) {
@@ -57,6 +63,8 @@ public class TicketServiceImpl implements TicketService {
             carritoProductoRepository.delete(carritoProducto);
         }
 
+        sendMail(carritoProductos, cliente);
+
         return "Compra OK";
 
     }
@@ -64,5 +72,20 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public Set<TicketDTO> getCompras(Cliente cliente) {
         return ticketRepository.findAll().stream().map(TicketDTO::new).collect(Collectors.toSet());
+    }
+
+    public void sendMail(Set<CarritoProducto> productos, Cliente cliente) {
+        String cuerpo = "";
+
+        for (CarritoProducto producto : productos) {
+            cuerpo += "Producto: " + producto.getProducto().getNombre() + "\n";
+            cuerpo += "Cantidad: " + producto.getCantidadProductos() + "\n";
+            cuerpo += "Monto: " + producto.getMonto() + "\n";
+            cuerpo += "-----------------------------------------\n";
+        }
+
+        cuerpo += "Total: $" + cliente.getCarrito().getMontoTotal();
+
+        emailService.sendEmail("raffi.kocak13@gmail.com", "Compra realizada " + LocalDate.now(), cuerpo);
     }
 }

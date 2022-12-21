@@ -46,6 +46,7 @@ public class EcommerceApplication {
 			Producto producto2 = new Producto("Fideos marolio 500g", 200L,80.1);
 
 			CarritoProducto carritoProducto1 = new CarritoProducto(carrito1, producto1, 5);
+			carrito1.setMontoTotal(carritoProducto1.getMonto());
 
 			clienteRepository.save(cliente2);
 			clienteRepository.save(cliente1);
@@ -60,10 +61,10 @@ public class EcommerceApplication {
 			carritoProductoRepository.save(carritoProducto1);
 		};
 	}
-	/*
-	@EventListener(ApplicationReadyEvent.class)
-	public void sendMail() {
-		emailService.sendEmail("raffi.kocak13@gmail.com", "PRUEBA SUBJECT", "CUERPO EMAIL");
-	}
-	*/
+
+//	@EventListener(ApplicationReadyEvent.class)
+//	public void sendMail() {
+//		emailService.sendEmail("raffi.kocak13@gmail.com", "PRUEBA SUBJECT", "CUERPO EMAIL");
+//	}
+
 }
