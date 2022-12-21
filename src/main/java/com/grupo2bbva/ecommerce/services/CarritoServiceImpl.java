@@ -95,9 +95,13 @@ public class CarritoServiceImpl implements CarritoService{
                 //Si el producto existe, le agrego la cantidad que ya tiene a la cantidad nueva que me envían
                 int cantidadNuevaProductos = productoExistente.getCantidadProductos() + cantidadProductos;
                 double precioNuevoProductos = productoExistente.getProducto().getPrecio() * cantidadNuevaProductos;
+                double precioNuevoCarrito = carrito.getMontoTotal() + precioNuevoProductos;
                 if (cantidadNuevaProductos <= producto.getStock()) {
                     productoExistente.setCantidadProductos(cantidadNuevaProductos);
                     productoExistente.setMonto(precioNuevoProductos);
+                    carrito.setMontoTotal(precioNuevoCarrito);
+
+                    carritoRepository.save(carrito);
 
                     carritoProductoRepository.save(productoExistente);
 
@@ -109,6 +113,10 @@ public class CarritoServiceImpl implements CarritoService{
 
         try {
             CarritoProducto carritoProducto = new CarritoProducto(carrito, producto, cantidadProductos);
+            double precioNuevoCarrito = carrito.getMontoTotal() + carritoProducto.getMonto();
+            carrito.setMontoTotal(precioNuevoCarrito);
+
+            carritoRepository.save(carrito);
 
             carritoProductoRepository.save(carritoProducto);
             return "Agregado OK";
@@ -140,17 +148,21 @@ public class CarritoServiceImpl implements CarritoService{
         for(CarritoProducto productoExistente : productosExistentes) {
             if (productoExistente.getProducto().getId() == producto.getId()) {
                 int cantidadNuevaProductos = productoExistente.getCantidadProductos() - cantidadProductos;
-
                 if (cantidadNuevaProductos < 1) {
+                    carrito.setMontoTotal(carrito.getMontoTotal() - productoExistente.getMonto());
+                    carritoRepository.save(carrito);
                     carritoProductoRepository.delete(productoExistente);
 
                     return "Producto eliminado";
                 }
                 double precioNuevoProductos = productoExistente.getProducto().getPrecio() * cantidadNuevaProductos;
+                double precioNuevoCarrito = carrito.getMontoTotal() - productoExistente.getProducto().getPrecio() * cantidadProductos;
+                carrito.setMontoTotal(precioNuevoCarrito);
 
                 productoExistente.setMonto(precioNuevoProductos);
                 productoExistente.setCantidadProductos(cantidadNuevaProductos);
 
+                carritoRepository.save(carrito);
                 carritoProductoRepository.save(productoExistente);
 
                 return "Producto restado";
