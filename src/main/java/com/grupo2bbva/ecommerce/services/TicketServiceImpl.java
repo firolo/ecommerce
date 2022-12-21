@@ -87,5 +87,6 @@ public class TicketServiceImpl implements TicketService {
         cuerpo += "Total: $" + cliente.getCarrito().getMontoTotal();
 
         emailService.sendEmail("raffi.kocak13@gmail.com", "Compra realizada " + LocalDate.now(), cuerpo);
+//        emailService.sendEmail(cliente.getEmail(), "Compra realizada " + LocalDate.now(), cuerpo);
     }
 }
