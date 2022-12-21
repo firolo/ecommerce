@@ -16,18 +16,24 @@ public class CategoriaProductoController {
 
     @PostMapping("/categoryproduct")
     ResponseEntity<Object> joinCategoryProduct(Authentication authentication, @RequestBody CategoriaProductoDTOApplication categoriaProductoDTOApplication) {
-        if(categoriaProductoService.add(categoriaProductoDTOApplication))
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        else
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        if (authentication != null) {
+            if (categoriaProductoService.add(categoriaProductoDTOApplication))
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            else
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>("No estás autenticado", HttpStatus.UNAUTHORIZED);
     }
 
     @DeleteMapping("categoryproduct")
     ResponseEntity<Object> deleteJoinCategoryProduct(Authentication authentication, @RequestBody CategoriaProductoDTOApplication categoriaProductoDTOApplication) {
-        if(categoriaProductoService.delete(categoriaProductoDTOApplication))
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        else
-            return new ResponseEntity<>("No se encontró la relación categoría producto",HttpStatus.FORBIDDEN);
+        if (authentication != null) {
+            if (categoriaProductoService.delete(categoriaProductoDTOApplication))
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            else
+                return new ResponseEntity<>("No se encontró la relación categoría producto", HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>("No estás autenticado", HttpStatus.UNAUTHORIZED);
     }
 
 }

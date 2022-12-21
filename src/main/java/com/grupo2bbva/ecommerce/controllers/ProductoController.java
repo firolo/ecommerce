@@ -26,26 +26,35 @@ public class ProductoController {
     }
 
     @PostMapping("/products")
-    ResponseEntity<Object> addProducto(@RequestBody ProductoDTOApplication productoDTOApplication) {
-        if(productoService.create(productoDTOApplication))
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        else
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    ResponseEntity<Object> addProducto(Authentication authentication, @RequestBody ProductoDTOApplication productoDTOApplication) {
+        if (authentication != null) {
+            if (productoService.create(productoDTOApplication))
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            else
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>("No estás autenticado", HttpStatus.UNAUTHORIZED);
     }
 
     @PutMapping("/products")
-    ResponseEntity updateProducto(@RequestBody ProductoDTOApplication productoDTOApplication) {
+    ResponseEntity updateProducto(Authentication authentication, @RequestBody ProductoDTOApplication productoDTOApplication) {
+        if (authentication != null) {
         if(productoService.update(productoDTOApplication))
             return new ResponseEntity<>(HttpStatus.CREATED);
         else
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>("No estás autenticado", HttpStatus.UNAUTHORIZED);
     }
 
     @DeleteMapping("/products")
-    ResponseEntity deleteProducto(@RequestBody ProductoDTOApplication productoDTOApplication) {
-        if(productoService.delete(productoDTOApplication.getId()))
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        else
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    ResponseEntity deleteProducto(Authentication authentication, @RequestBody ProductoDTOApplication productoDTOApplication) {
+        if (authentication != null) {
+            if (productoService.delete(productoDTOApplication.getId()))
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            else
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>("No estás autenticado", HttpStatus.UNAUTHORIZED);
     }
 }

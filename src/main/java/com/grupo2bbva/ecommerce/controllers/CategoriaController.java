@@ -28,27 +28,41 @@ public class CategoriaController {
     }
 
     @PostMapping("/categories")
-    ResponseEntity<Object> addCategoria(@RequestBody CategoriaDTOApplication categoriaDTOApplication) {
-        if(categoriaService.create(categoriaDTOApplication.getNombre()) != null)
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        else
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    ResponseEntity<Object> addCategoria(Authentication authentication, @RequestBody CategoriaDTOApplication categoriaDTOApplication) {
+        if (authentication != null) {
+            if (categoriaDTOApplication.getNombre() == null)
+                return new ResponseEntity<>("se debe ingresar categoria", HttpStatus.FORBIDDEN);
+            if (categoriaService.create(categoriaDTOApplication.getNombre()) != null)
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            else
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>("No estás autenticado", HttpStatus.UNAUTHORIZED);
     }
 
     @DeleteMapping("/categories")
-    ResponseEntity<Object> deleteCategoria(@RequestBody CategoriaDTOApplication categoriaDTOApplication) {
-        if(categoriaService.delete(categoriaDTOApplication.getId()))
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        else
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    ResponseEntity<Object> deleteCategoria(Authentication authentication, @RequestBody CategoriaDTOApplication categoriaDTOApplication) {
+        if (authentication != null) {
+            if(categoriaDTOApplication.getId() == null)
+                return new ResponseEntity<>("se debe ingresar todos los datos", HttpStatus.FORBIDDEN);
+            if(categoriaService.delete(categoriaDTOApplication.getId()))
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            else
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>("No estás autenticado", HttpStatus.UNAUTHORIZED);
     }
 
     @PutMapping("/categories")
-    ResponseEntity<Object> updateCategoria(@RequestBody CategoriaDTOApplication categoriaDTOApplication) {
-        if(categoriaService.update(categoriaDTOApplication))
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        else
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    ResponseEntity<Object> updateCategoria(Authentication authentication, @RequestBody CategoriaDTOApplication categoriaDTOApplication) {
+        if (authentication != null) {
+            if(categoriaDTOApplication.getId() == null || categoriaDTOApplication.getNombre() == null)
+                return new ResponseEntity<>("se debe ingresar todos los datos", HttpStatus.FORBIDDEN);
+            if (categoriaService.update(categoriaDTOApplication))
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            else
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>("No estás autenticado", HttpStatus.UNAUTHORIZED);
     }
-
 }
