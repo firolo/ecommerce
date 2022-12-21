@@ -35,6 +35,7 @@ public class EcommerceApplication {
 		return (args) -> {
 			// save a couple of customers
 			Cliente cliente1 = new Cliente("Pepito", "Firolo", "pepito@firolo.com", passwordEncoder.encode("123"));
+			Cliente cliente2 = new Cliente("admin", "admin", "admin@admin.com", passwordEncoder.encode("123"));
 
 			Carrito carrito1 = new Carrito(cliente1);
 
@@ -46,6 +47,7 @@ public class EcommerceApplication {
 
 			CarritoProducto carritoProducto1 = new CarritoProducto(carrito1, producto1, 5);
 
+			clienteRepository.save(cliente2);
 			clienteRepository.save(cliente1);
 			carritoRepository.save(carrito1);
 

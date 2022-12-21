@@ -17,16 +17,14 @@ import javax.servlet.http.HttpSession;
 public class WebAuthorization extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/**").permitAll();
-//                .antMatchers("/web/**").hasAnyAuthority("ADMIN", "USER")
-//                .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
-//                .antMatchers(HttpMethod.POST, "/api/transactions").hasAnyAuthority("ADMIN", "USER")
-//                .antMatchers(HttpMethod.POST, "/api/loans").hasAnyAuthority("ADMIN", "USER")
-//                .antMatchers(HttpMethod.GET, "/api/loans").hasAnyAuthority("ADMIN", "USER")
-//                .antMatchers("/api/clients/current/**").hasAnyAuthority("ADMIN", "USER")
-//                .antMatchers("/admin/**").hasAuthority("ADMIN")
-//                .antMatchers("/**").hasAnyAuthority("ADMIN", "USER");
+        http.authorizeRequests().
+                antMatchers("/api/login").permitAll().
+                antMatchers("/api/clients").permitAll().
+                antMatchers("/h2-console/**").permitAll().
+                antMatchers("/api/categories/**").hasAuthority("ADMIN").
+                antMatchers("/api/products/**").hasAuthority("ADMIN").
+                antMatchers("/api/categoryproduct/**").hasAuthority("ADMIN").
+                antMatchers("/**").hasAuthority("CLIENT");
 
         http.formLogin()
                 .usernameParameter("email")
