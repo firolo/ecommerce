@@ -1,5 +1,6 @@
 package com.grupo2bbva.ecommerce.controllers;
 
+import com.grupo2bbva.ecommerce.dtos.CategoriaProductoDTO;
 import com.grupo2bbva.ecommerce.dtos.CategoriaProductoDTOApplication;
 import com.grupo2bbva.ecommerce.services.CategoriaProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
@@ -25,7 +28,7 @@ public class CategoriaProductoController {
         return new ResponseEntity<>("No estás autenticado", HttpStatus.UNAUTHORIZED);
     }
 
-    @DeleteMapping("categoryproduct")
+    @DeleteMapping("/categoryproduct")
     ResponseEntity<Object> deleteJoinCategoryProduct(Authentication authentication, @RequestBody CategoriaProductoDTOApplication categoriaProductoDTOApplication) {
         if (authentication != null) {
             if (categoriaProductoService.delete(categoriaProductoDTOApplication))
@@ -34,6 +37,14 @@ public class CategoriaProductoController {
                 return new ResponseEntity<>("No se encontró la relación categoría producto", HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>("No estás autenticado", HttpStatus.UNAUTHORIZED);
+    }
+
+    @GetMapping("/categoryproduct")
+    public Set<CategoriaProductoDTO> getCategoryProduct(Authentication authentication) {
+        if(authentication!= null) {
+            return categoriaProductoService.getAll();
+        }
+        return null;
     }
 
 }

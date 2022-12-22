@@ -84,11 +84,11 @@ public class CarritoProductoController {
         return new ResponseEntity<>("No estás autenticado", HttpStatus.UNAUTHORIZED);
     }
 
-    @GetMapping("/categoryproduct")
+    /*@GetMapping("/categoryproduct")
     public Set<CarritoProductoDTO> getProductosCarrito(Authentication authentication) {
         if (authentication != null) {
             return carritoProductoService.findAll().stream().map(CarritoProductoDTO::new).collect(Collectors.toSet());
         }
         return null;
-    }
+    }*/
 }
