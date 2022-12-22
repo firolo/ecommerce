@@ -1,5 +1,6 @@
 package com.grupo2bbva.ecommerce.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -41,6 +42,7 @@ public class Categoria {
     public void setActive(boolean active) {
         this.active = active;
     }
+
 
     public Set<CategoriaProducto> getCategoriaProductos() {
         return categoriaProductos;

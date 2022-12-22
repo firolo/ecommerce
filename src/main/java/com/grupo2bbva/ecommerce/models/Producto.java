@@ -1,5 +1,6 @@
 package com.grupo2bbva.ecommerce.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -48,10 +49,12 @@ public class Producto {
         this.stock = stock;
     }
 
+    @JsonIgnore
     public Set<CategoriaProducto> getProductoCategorias() {
         return productoCategorias;
     }
 
+    @JsonIgnore
     public void setProductoCategorias(Set<CategoriaProducto> productoCategorias) {
         this.productoCategorias = productoCategorias;
     }
