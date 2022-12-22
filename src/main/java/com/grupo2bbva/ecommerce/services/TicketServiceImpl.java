@@ -37,7 +37,7 @@ public class TicketServiceImpl implements TicketService {
         double sumaProductos = 0d;
         for (CarritoProducto carritoProducto : carritoProductos) {
             Producto producto = productoRepository.findById(carritoProducto.getProducto().getId()).orElse(null);
-            if(producto.getStock().compareTo((long) carritoProducto.getCantidadProductos())>0) {
+            if(producto.getStock().compareTo((long) carritoProducto.getCantidadProductos())>=0) {
                 producto.setStock(producto.getStock()-carritoProducto.getCantidadProductos());
                 productoRepository.save(producto);
             } else {
