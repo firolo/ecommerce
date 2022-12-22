@@ -2,10 +2,7 @@ package com.grupo2bbva.ecommerce.services;
 
 import com.grupo2bbva.ecommerce.dtos.TicketDTO;
 import com.grupo2bbva.ecommerce.models.*;
-import com.grupo2bbva.ecommerce.repositories.CarritoProductoRepository;
-import com.grupo2bbva.ecommerce.repositories.ProductoRepository;
-import com.grupo2bbva.ecommerce.repositories.TicketProductoRepository;
-import com.grupo2bbva.ecommerce.repositories.TicketRepository;
+import com.grupo2bbva.ecommerce.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -29,7 +26,8 @@ public class TicketServiceImpl implements TicketService {
     CarritoProductoRepository carritoProductoRepository;
     @Autowired
     ProductoRepository productoRepository;
-
+    @Autowired
+    CarritoRepository carritoRepository;
     @Autowired
     EmailService emailService;
 
@@ -64,6 +62,9 @@ public class TicketServiceImpl implements TicketService {
         }
 
         sendMail(carritoProductos, cliente);
+        cliente.getCarrito().setMontoTotal(0);
+        carritoRepository.save(cliente.getCarrito());
+
 
         return "Compra OK";
 

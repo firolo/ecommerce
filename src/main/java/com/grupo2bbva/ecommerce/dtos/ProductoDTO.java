@@ -11,7 +11,7 @@ public class ProductoDTO {
     private String nombre;
     private Long stock;
     private Double precio;
-    private Set<CategoriaDTO> categorias;
+    private Set<ProductoCategoriaDTO> categorias;
     private boolean active;
 
     public Long getId() {
@@ -30,7 +30,7 @@ public class ProductoDTO {
         return precio;
     }
 
-    public Set<CategoriaDTO> getCategorias() {
+    public Set<ProductoCategoriaDTO> getCategorias() {
         return categorias;
     }
 
@@ -46,8 +46,7 @@ public class ProductoDTO {
         this.nombre = producto.getNombre();
         this.stock = producto.getStock();
         this.precio = producto.getPrecio();
-        /*this.categorias = producto.getProductoCategorias().stream().map(categoriaProducto ->
-                new CategoriaDTO(categoriaProducto.getCategoria())).collect(toSet());*/
+        this.categorias = producto.getProductoCategorias().stream().map(ProductoCategoriaDTO::new).collect(toSet());
         this.active = producto.isActive();
     }
 

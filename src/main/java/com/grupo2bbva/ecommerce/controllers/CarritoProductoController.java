@@ -1,5 +1,6 @@
 package com.grupo2bbva.ecommerce.controllers;
 
+import com.grupo2bbva.ecommerce.dtos.CarritoProductoDTO;
 import com.grupo2bbva.ecommerce.models.Cliente;
 import com.grupo2bbva.ecommerce.models.Producto;
 import com.grupo2bbva.ecommerce.services.CarritoProductoService;
@@ -11,6 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -78,5 +82,13 @@ public class CarritoProductoController {
         }
 
         return new ResponseEntity<>("No estás autenticado", HttpStatus.UNAUTHORIZED);
+    }
+
+    @GetMapping("/categoryproduct")
+    public Set<CarritoProductoDTO> getProductosCarrito(Authentication authentication) {
+        if (authentication != null) {
+            return carritoProductoService.findAll().stream().map(CarritoProductoDTO::new).collect(Collectors.toSet());
+        }
+        return null;
     }
 }
