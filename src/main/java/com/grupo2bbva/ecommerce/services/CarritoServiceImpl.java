@@ -127,7 +127,7 @@ public class CarritoServiceImpl implements CarritoService{
 
     @Override
     public String quitarProductoDeCarrito(Carrito carrito, Producto producto, int cantidadProductos) {
-        if (cantidadProductos < 1 || cantidadProductos > producto.getStock()) {
+        if (cantidadProductos < 1) {
             return "Cant. productos invalida";
         }
 
