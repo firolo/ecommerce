@@ -1,5 +1,6 @@
 package com.grupo2bbva.ecommerce.services;
 
+import com.grupo2bbva.ecommerce.dtos.CategoriaProductoDTO;
 import com.grupo2bbva.ecommerce.dtos.CategoriaProductoDTOApplication;
 import com.grupo2bbva.ecommerce.models.Categoria;
 import com.grupo2bbva.ecommerce.models.CategoriaProducto;
@@ -48,6 +49,11 @@ public class CategoriaProductoServiceImpl implements CategoriaProductoService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Set<CategoriaProductoDTO> getAll() {
+        return categoriaProductoRepository.findAll().stream().map(CategoriaProductoDTO::new).collect(Collectors.toSet());
     }
 
 }
